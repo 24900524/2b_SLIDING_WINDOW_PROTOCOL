@@ -1,9 +1,7 @@
-# 2b IMPLEMENTATION OF SLIDING WINDOW PROTOCOL
-## NAME : DHARSHINI S N
-## REGISTER NUMBER : 212224230062
-## AIM
-To write a python program to perform sliding window protocol
-## ALGORITHM:
+# 2a_Stop_and_Wait_Protocol
+## AIM 
+To write a python program to perform stop and wait protocol
+## ALGORITHM
 1. Start the program.
 2. Get the frame size from the user
 3. To create the frame based on the user request.
@@ -11,62 +9,46 @@ To write a python program to perform sliding window protocol
 5. If your frames reach the server it will send ACK signal to client
 6. Stop the Program
 ## PROGRAM
-### server:
-```python
-import socket
-s = socket.socket()
-s.bind(('localhost', 9999))
-s.listen(1)
-print("Server listening...")
-conn, addr = s.accept()
-print(f"Connected to {addr}")
-
-while True:
-    frames = conn.recv(1024).decode()
-    if not frames:
-        break
-
-    print(f"Received frames: {frames}")
-    ack_message = f"ACK for frames: {frames}"
-    conn.send(ack_message.encode())
-
-conn.close()  
-s.close()  
-```
-
-### client:
-```python
-import socket
-c = socket.socket()
-c.connect(('localhost', 9999))
-
-size = int(input("Enter number of frames to send: "))
-l = list(range(size))  
-print("Total frames to send:", len(l))
-s = int(input("Enter Window Size: "))
-
-i = 0
-while True:
-    while i < len(l):
-        st = i + s
-        frames_to_send = l[i:st]  
-        print(f"Sending frames: {frames_to_send}")
-        c.send(str(frames_to_send).encode())  
-
-        ack = c.recv(1024).decode()  
-        if ack:
-            print(f"Acknowledgment received: {ack}")
-            i += s  
-
-    break
-c.close()  
 
 ```
-## OUPUT
+NAME : DHARSHINI S N
 
-### server
-![alt text](image-1.png)
-### client
-![alt text](image.png)
+REGISTER NUMBER : 212224230062
+```
+## CLIENT:
+```
+import socket
+s=socket.socket()
+s.bind(('localhost',8000))
+s.listen(5)
+c,addr=s.accept()
+while True:
+   i=input("Enter a data: ")
+   c.send(i.encode())
+   ack=c.recv(1024).decode()
+   if ack:
+     print(ack)
+     continue
+   else:
+     c.close()
+     break
+```
+## SERVER:
+```
+import socket
+s=socket.socket()
+s.connect(('localhost',8000))
+while True:
+    print(s.recv(1024).decode())
+    s.send("Acknowledgement Recieved".encode())
+```
+## OUTPUT
+
+## CLIENT:
+<img width="960" alt="2ac" src="https://github.com/user-attachments/assets/a0f38acc-b070-4b96-b40f-c05d55b7446a">
+
+## SERVER:
+<img width="960" alt="2as" src="https://github.com/user-attachments/assets/1b3fd4e3-f3f5-4a25-93fb-e6f240eee6ee">
+
 ## RESULT
-Thus, python program to perform stop and wait protocol was successfully executed
+Thus, python program to perform stop and wait protocol was successfully executed.
